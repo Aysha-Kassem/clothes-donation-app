@@ -31,7 +31,7 @@ app.use(helmet({
     directives: {
       defaultSrc: ["'self'"],
       styleSrc: ["'self'", "'unsafe-inline'", "https:", "cdn.jsdelivr.net"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "cdn.jsdelivr.net"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "cdn.jsdelivr.net", "cdn.tailwindcss.com"],
       imgSrc: ["'self'", "data:", "https:", "res.cloudinary.com"],
       fontSrc: ["'self'", "https:", "cdn.jsdelivr.net"],
     },
