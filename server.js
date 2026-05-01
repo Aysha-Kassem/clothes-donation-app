@@ -109,11 +109,16 @@ const mainRoutes = require('./routes/mainRoutes');
 const donationRoutes = require('./routes/donationRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const donationController = require('./controllers/donationController');
+const { hasDatabaseConfig, isDatabaseReady } = require('./config/db');
 
 app.get('/health', (req, res) => {
   res.status(200).json({
     ok: true,
-    service: 'clothes-donation-app'
+    service: 'clothes-donation-app',
+    database: {
+      configured: hasDatabaseConfig(),
+      connected: isDatabaseReady()
+    }
   });
 });
 
@@ -121,27 +126,12 @@ app.get('/health', (req, res) => {
 // if mounted routers behave differently than expected.
 app.get('/donations', donationController.getAllDonations);
 
-// Fallback homepage for production deployments. If the main router does not
-// match `/` for any platform-specific reason, send visitors to the donations
-// listing instead of the generic 404 page.
-app.get('/', (req, res, next) => {
-  if (req.path !== '/') {
-    return next();
-  }
-
-  return res.redirect('/donations');
-});
-
 app.use('/', mainRoutes);
 app.use('/donations', donationRoutes);
 app.use('/admin', adminRoutes);
 
 // 404 Handler
 app.use((req, res) => {
-  if (req.originalUrl === '/' || req.path === '/') {
-    return res.redirect('/donations');
-  }
-
   res.status(404).render('pages/404', { 
     title: '404 - Page Not Found',
     layout: false 

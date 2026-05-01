@@ -5,6 +5,7 @@
 
 const Donation = require('../models/Donation');
 const cloudinary = require('../config/cloudinary');
+const { connectDB, hasDatabaseConfig, isDatabaseReady } = require('../config/db');
 
 const emptyStats = {
   total: 0,
@@ -13,11 +14,38 @@ const emptyStats = {
   donated: 0
 };
 
+const ensureDatabaseConnection = async () => {
+  if (!hasDatabaseConfig()) {
+    return false;
+  }
+
+  if (isDatabaseReady()) {
+    return true;
+  }
+
+  const connection = await connectDB();
+  return Boolean(connection);
+};
+
 // Get all donations with filtering
 // عرض جميع التبرعات مع الفلترة
 exports.getAllDonations = async (req, res) => {
   try {
+    const databaseReady = await ensureDatabaseConnection();
     const { category, city, status = 'available', search } = req.query;
+    const filters = { category, city, status, search };
+
+    if (!databaseReady) {
+      return res.status(503).render('pages/donations', {
+        title: req.t('donations.title', 'Browse Donations'),
+        donations: [],
+        cities: [],
+        stats: emptyStats,
+        filters,
+        databaseUnavailable: true,
+        layout: 'layouts/main'
+      });
+    }
 
     // Build filter object
     const filter = {};
@@ -58,13 +86,27 @@ exports.getAllDonations = async (req, res) => {
       donations,
       cities,
       stats,
-      filters: { category, city, status, search },
+      filters,
+      databaseUnavailable: false,
       layout: 'layouts/main'
     });
   } catch (error) {
     console.error('Error fetching donations:', error);
-    req.flash('error_msg', req.t('errors.fetchFailed', 'Failed to load donations'));
-    res.redirect('/');
+
+    res.status(500).render('pages/donations', {
+      title: req.t('donations.title', 'Browse Donations'),
+      donations: [],
+      cities: [],
+      stats: emptyStats,
+      filters: {
+        category: req.query.category,
+        city: req.query.city,
+        status: req.query.status || 'available',
+        search: req.query.search
+      },
+      databaseUnavailable: true,
+      layout: 'layouts/main'
+    });
   }
 };
 
@@ -72,6 +114,13 @@ exports.getAllDonations = async (req, res) => {
 // عرض تفاصيل قطعة واحدة
 exports.getDonationById = async (req, res) => {
   try {
+    const databaseReady = await ensureDatabaseConnection();
+
+    if (!databaseReady) {
+      req.flash('error_msg', req.t('errors.fetchFailed', 'Database connection is unavailable right now'));
+      return res.redirect('/donations');
+    }
+
     const donation = await Donation.findById(req.params.id);
 
     if (!donation) {
@@ -117,7 +166,13 @@ exports.getAddDonationForm = (req, res) => {
 // إنشاء تبرع جديد
 exports.createDonation = async (req, res) => {
   try {
+    const databaseReady = await ensureDatabaseConnection();
     const { itemName, category, size, condition, city, whatsappNumber, description, donorName } = req.body;
+
+    if (!databaseReady) {
+      req.flash('error_msg', req.t('errors.createFailed', 'Database connection is unavailable right now'));
+      return res.redirect('/donations/add');
+    }
 
     // Check if image was uploaded
     if (!req.file) {
@@ -163,6 +218,12 @@ exports.createDonation = async (req, res) => {
 // أحدث التبرعات للصفحة الرئيسية
 exports.getLatestDonations = async (limit = 8) => {
   try {
+    const databaseReady = await ensureDatabaseConnection();
+
+    if (!databaseReady) {
+      return [];
+    }
+
     return await Donation.find({ status: 'available' })
       .sort({ createdAt: -1 })
       .limit(limit);
@@ -175,6 +236,12 @@ exports.getLatestDonations = async (limit = 8) => {
 // Fetch donation statistics for server-rendered pages
 exports.fetchDonationStats = async () => {
   try {
+    const databaseReady = await ensureDatabaseConnection();
+
+    if (!databaseReady) {
+      return emptyStats;
+    }
+
     return await Donation.getStats();
   } catch (error) {
     console.error('Error fetching donation stats:', error);
@@ -185,6 +252,15 @@ exports.fetchDonationStats = async () => {
 // Fetch homepage stats including unique city count
 exports.fetchHomepageStats = async () => {
   try {
+    const databaseReady = await ensureDatabaseConnection();
+
+    if (!databaseReady) {
+      return {
+        ...emptyStats,
+        cities: 0
+      };
+    }
+
     const [stats, cities] = await Promise.all([
       Donation.getStats(),
       Donation.distinct('city')
@@ -207,6 +283,15 @@ exports.fetchHomepageStats = async () => {
 // إحصائيات التبرعات
 exports.getDonationStats = async (req, res) => {
   try {
+    const databaseReady = await ensureDatabaseConnection();
+
+    if (!databaseReady) {
+      return res.status(503).json({
+        success: false,
+        message: 'Database connection is unavailable'
+      });
+    }
+
     const stats = await exports.fetchDonationStats();
 
     // Category breakdown

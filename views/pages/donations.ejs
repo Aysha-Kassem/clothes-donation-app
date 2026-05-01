@@ -96,6 +96,21 @@
     </div>
 </div>
 
+<% if (databaseUnavailable) { %>
+    <section class="bg-amber-50 border-b border-amber-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="rounded-2xl border border-amber-200 bg-white/80 px-4 py-3 text-amber-800">
+                <strong><%= isRTL ? 'قاعدة البيانات غير متصلة حالياً.' : 'Database is currently unavailable.' %></strong>
+                <span>
+                    <%= isRTL
+                        ? 'الموقع شغال، لكن يلزم ضبط MONGODB_URI على Railway لعرض التبرعات الحقيقية.'
+                        : 'The site is running, but MONGODB_URI must be configured on Railway to load real donations.' %>
+                </span>
+            </div>
+        </div>
+    </section>
+<% } %>
+
 <!-- Donations Grid -->
 <section class="py-8 bg-gray-50 min-h-[500px]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

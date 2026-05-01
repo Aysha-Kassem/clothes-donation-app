@@ -7,6 +7,10 @@ const mongoose = require('mongoose');
 
 let connectionPromise = null;
 
+const hasDatabaseConfig = () => Boolean(process.env.MONGODB_URI);
+
+const isDatabaseReady = () => mongoose.connection.readyState === 1;
+
 const connectDB = async () => {
   const mongoUri = process.env.MONGODB_URI;
 
@@ -44,5 +48,7 @@ connectDB();
 
 module.exports = {
   mongoose,
-  connectDB
+  connectDB,
+  hasDatabaseConfig,
+  isDatabaseReady
 };
