@@ -1,0 +1,274 @@
+<!-- Page Header -->
+<section class="bg-gradient-to-r from-secondary-500 to-secondary-600 text-white py-12">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-3xl md:text-4xl font-bold mb-2"><%= t('addDonation.title') %></h1>
+        <p class="text-white/80"><%= t('addDonation.subtitle') %></p>
+    </div>
+</section>
+
+<!-- Form Section -->
+<section class="py-12 bg-gray-50">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+
+            <form action="/donations" method="POST" enctype="multipart/form-data" class="space-y-6" id="donationForm">
+
+                <!-- Item Name -->
+                <div>
+                    <label for="itemName" class="block text-sm font-semibold text-gray-700 mb-2">
+                        <%= t('addDonation.itemName') %> <span class="text-red-500">*</span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="itemName" 
+                        name="itemName" 
+                        required
+                        placeholder="<%= t('addDonation.itemNamePlaceholder') %>"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition"
+                    >
+                </div>
+
+                <!-- Category & Size (2 columns) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="category" class="block text-sm font-semibold text-gray-700 mb-2">
+                            <%= t('addDonation.category') %> <span class="text-red-500">*</span>
+                        </label>
+                        <select 
+                            id="category" 
+                            name="category" 
+                            required
+                            class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition bg-white"
+                        >
+                            <option value=""><%= t('addDonation.selectCategory') %></option>
+                            <option value="men"><%= t('addDonation.men') %></option>
+                            <option value="women"><%= t('addDonation.women') %></option>
+                            <option value="kids"><%= t('addDonation.kids') %></option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="size" class="block text-sm font-semibold text-gray-700 mb-2">
+                            <%= t('addDonation.size') %> <span class="text-red-500">*</span>
+                        </label>
+                        <select 
+                            id="size" 
+                            name="size" 
+                            required
+                            class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition bg-white"
+                        >
+                            <option value=""><%= t('addDonation.selectSize') %></option>
+                            <option value="XS">XS</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                            <option value="XXL">XXL</option>
+                            <option value="XXXL">XXXL</option>
+                            <option value="Other"><%= isRTL ? 'أخرى' : 'Other' %></option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Condition & City (2 columns) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="condition" class="block text-sm font-semibold text-gray-700 mb-2">
+                            <%= t('addDonation.condition') %> <span class="text-red-500">*</span>
+                        </label>
+                        <select 
+                            id="condition" 
+                            name="condition" 
+                            required
+                            class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition bg-white"
+                        >
+                            <option value=""><%= t('addDonation.selectCondition') %></option>
+                            <option value="new"><%= t('addDonation.new') %></option>
+                            <option value="like-new"><%= t('addDonation.like-new') %></option>
+                            <option value="good"><%= t('addDonation.good') %></option>
+                            <option value="fair"><%= t('addDonation.fair') %></option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="city" class="block text-sm font-semibold text-gray-700 mb-2">
+                            <%= t('addDonation.city') %> <span class="text-red-500">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="city" 
+                            name="city" 
+                            required
+                            placeholder="<%= t('addDonation.cityPlaceholder') %>"
+                            class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition"
+                        >
+                    </div>
+                </div>
+
+                <!-- WhatsApp Number -->
+                <div>
+                    <label for="whatsappNumber" class="block text-sm font-semibold text-gray-700 mb-2">
+                        <%= t('addDonation.whatsapp') %> <span class="text-red-500">*</span>
+                    </label>
+                    <input 
+                        type="tel" 
+                        id="whatsappNumber" 
+                        name="whatsappNumber" 
+                        required
+                        placeholder="<%= t('addDonation.whatsappPlaceholder') %>"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition"
+                    >
+                    <p class="text-xs text-gray-500 mt-1"><%= t('addDonation.whatsappHint') %></p>
+                </div>
+
+                <!-- Donor Name (Optional) -->
+                <div>
+                    <label for="donorName" class="block text-sm font-semibold text-gray-700 mb-2">
+                        <%= t('addDonation.donorName') %>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="donorName" 
+                        name="donorName"
+                        placeholder="<%= t('addDonation.donorNamePlaceholder') %>"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition"
+                    >
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <label for="description" class="block text-sm font-semibold text-gray-700 mb-2">
+                        <%= t('addDonation.description') %>
+                    </label>
+                    <textarea 
+                        id="description" 
+                        name="description" 
+                        rows="3"
+                        placeholder="<%= t('addDonation.descriptionPlaceholder') %>"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition resize-none"
+                    ></textarea>
+                </div>
+
+                <!-- Image Upload with Preview -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        <%= t('addDonation.image') %> <span class="text-red-500">*</span>
+                    </label>
+
+                    <div class="relative">
+                        <input 
+                            type="file" 
+                            id="image" 
+                            name="image" 
+                            accept="image/*"
+                            required
+                            class="hidden"
+                            onchange="previewImage(this)"
+                        >
+
+                        <label 
+                            for="image" 
+                            id="uploadLabel"
+                            class="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-primary-500 hover:bg-primary-50 transition bg-gray-50"
+                        >
+                            <div id="uploadPlaceholder" class="flex flex-col items-center">
+                                <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-3"></i>
+                                <p class="text-sm text-gray-600 font-medium">
+                                    <%= isRTL ? 'انقر لرفع صورة' : 'Click to upload image' %>
+                                </p>
+                                <p class="text-xs text-gray-400 mt-1">
+                                    <%= t('addDonation.imageHint') %>
+                                </p>
+                            </div>
+
+                            <img 
+                                id="imagePreview" 
+                                class="hidden w-full h-full object-cover rounded-xl"
+                                alt="Preview"
+                            >
+                        </label>
+
+                        <!-- Remove Image Button -->
+                        <button 
+                            type="button" 
+                            id="removeImage"
+                            onclick="removePreview()"
+                            class="hidden absolute top-2 <%= isRTL ? 'left-2' : 'right-2' %> bg-red-500 hover:bg-red-600 text-white w-8 h-8 rounded-full flex items-center justify-center transition shadow-md"
+                        >
+                            <i class="fas fa-times text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Submit Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                    <button 
+                        type="submit" 
+                        id="submitBtn"
+                        class="flex-1 bg-primary-500 hover:bg-primary-600 text-white font-bold py-3.5 px-6 rounded-xl transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                    >
+                        <i class="fas fa-paper-plane"></i>
+                        <%= t('addDonation.submit') %>
+                    </button>
+
+                    <a 
+                        href="/donations" 
+                        class="flex-1 sm:flex-none bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3.5 px-6 rounded-xl transition text-center flex items-center justify-center gap-2"
+                    >
+                        <i class="fas fa-times"></i>
+                        <%= t('addDonation.cancel') %>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Image Preview Function
+    function previewImage(input) {
+        const preview = document.getElementById('imagePreview');
+        const placeholder = document.getElementById('uploadPlaceholder');
+        const removeBtn = document.getElementById('removeImage');
+        const uploadLabel = document.getElementById('uploadLabel');
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.classList.remove('hidden');
+                placeholder.classList.add('hidden');
+                removeBtn.classList.remove('hidden');
+                uploadLabel.classList.remove('border-dashed', 'h-48');
+                uploadLabel.classList.add('h-64', 'border-solid', 'border-primary-500');
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    // Remove Preview Function
+    function removePreview() {
+        const input = document.getElementById('image');
+        const preview = document.getElementById('imagePreview');
+        const placeholder = document.getElementById('uploadPlaceholder');
+        const removeBtn = document.getElementById('removeImage');
+        const uploadLabel = document.getElementById('uploadLabel');
+
+        input.value = '';
+        preview.src = '';
+        preview.classList.add('hidden');
+        placeholder.classList.remove('hidden');
+        removeBtn.classList.add('hidden');
+        uploadLabel.classList.add('border-dashed', 'h-48');
+        uploadLabel.classList.remove('h-64', 'border-solid', 'border-primary-500');
+    }
+
+    // Form Validation
+    document.getElementById('donationForm').addEventListener('submit', function(e) {
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <%= isRTL ? "جاري الإرسال..." : "Submitting..." %>';
+    });
+</script>

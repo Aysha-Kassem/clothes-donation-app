@@ -1,0 +1,73 @@
+<nav class="bg-white shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+
+            <!-- Logo -->
+            <div class="flex-shrink-0 flex items-center">
+                <a href="/" class="flex items-center gap-2 group">
+                    <div class="w-10 h-10 bg-primary-500 rounded-full flex items-center justify-center group-hover:bg-primary-600 transition">
+                        <i class="fas fa-hand-holding-heart text-white text-lg"></i>
+                    </div>
+                    <span class="font-bold text-xl text-gray-800 group-hover:text-primary-600 transition">
+                        <%= t('app.name') %>
+                    </span>
+                </a>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center space-x-6 rtl:space-x-reverse">
+                <a href="/" class="text-gray-600 hover:text-primary-600 font-medium transition px-3 py-2 rounded-md hover:bg-primary-50">
+                    <%= t('nav.home') %>
+                </a>
+                <a href="/donations" class="text-gray-600 hover:text-primary-600 font-medium transition px-3 py-2 rounded-md hover:bg-primary-50">
+                    <%= t('nav.donations') %>
+                </a>
+                <a href="/donations/add" class="bg-primary-500 hover:bg-primary-600 text-white font-medium px-4 py-2 rounded-full transition shadow-md hover:shadow-lg">
+                    <i class="fas fa-plus mr-1 rtl:ml-1 rtl:mr-0"></i>
+                    <%= t('nav.addDonation') %>
+                </a>
+            </div>
+
+            <!-- Language Switcher & Mobile Menu -->
+            <div class="flex items-center gap-3">
+                <!-- Language Switcher -->
+                <a href="?lang=<%= otherLang %>" class="text-sm font-medium text-gray-500 hover:text-primary-600 transition border border-gray-300 rounded-full px-3 py-1 hover:border-primary-300">
+                    <%= otherLangLabel %>
+                </a>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-gray-600 hover:text-primary-600 focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100">
+        <div class="px-4 pt-2 pb-4 space-y-1">
+            <a href="/" class="block text-gray-600 hover:text-primary-600 font-medium py-2 px-3 rounded-md hover:bg-primary-50">
+                <i class="fas fa-home w-6 <%= isRTL ? 'ml-2' : 'mr-2' %>"></i>
+                <%= t('nav.home') %>
+            </a>
+            <a href="/donations" class="block text-gray-600 hover:text-primary-600 font-medium py-2 px-3 rounded-md hover:bg-primary-50">
+                <i class="fas fa-search w-6 <%= isRTL ? 'ml-2' : 'mr-2' %>"></i>
+                <%= t('nav.donations') %>
+            </a>
+            <a href="/donations/add" class="block bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-3 rounded-md mt-2">
+                <i class="fas fa-plus w-6 <%= isRTL ? 'ml-2' : 'mr-2' %>"></i>
+                <%= t('nav.addDonation') %>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+</script>

@@ -1,0 +1,245 @@
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-primary-500">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm text-gray-500 mb-1"><%= t('admin.totalDonations') %></p>
+                <p class="text-3xl font-bold text-gray-800"><%= stats.total %></p>
+            </div>
+            <div class="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center">
+                <i class="fas fa-gift text-primary-600 text-xl"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-green-500">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm text-gray-500 mb-1"><%= t('admin.available') %></p>
+                <p class="text-3xl font-bold text-gray-800"><%= stats.available %></p>
+            </div>
+            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                <i class="fas fa-check-circle text-green-600 text-xl"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-orange-500">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm text-gray-500 mb-1"><%= t('admin.reserved') %></p>
+                <p class="text-3xl font-bold text-gray-800"><%= stats.reserved %></p>
+            </div>
+            <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                <i class="fas fa-clock text-orange-600 text-xl"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-blue-500">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm text-gray-500 mb-1"><%= t('admin.recentActivity') %></p>
+                <p class="text-3xl font-bold text-gray-800"><%= recentActivity %></p>
+            </div>
+            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                <i class="fas fa-chart-line text-blue-600 text-xl"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Donations Table -->
+<div class="bg-white rounded-xl shadow-sm overflow-hidden">
+    <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+        <h2 class="text-lg font-bold text-gray-800">
+            <i class="fas fa-list mr-2 rtl:ml-2 rtl:mr-0 text-primary-500"></i>
+            <%= t('admin.title') %>
+        </h2>
+        <span class="text-sm text-gray-500">
+            <%= pagination.total %> <%= t('admin.totalDonations').toLowerCase() %>
+        </span>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-left rtl:text-right">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Image</th>
+                    <th class="px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Item</th>
+                    <th class="px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Category</th>
+                    <th class="px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">City</th>
+                    <th class="px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
+                    <th class="px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Date</th>
+                    <th class="px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider text-center"><%= t('admin.actions') %></th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                <% if (donations && donations.length > 0) { %>
+                    <% donations.forEach(donation => { %>
+                        <tr class="hover:bg-gray-50 transition" id="row-<%= donation._id %>">
+                            <td class="px-6 py-4">
+                                <img src="<%= donation.imageUrl %>" alt="" class="w-12 h-12 rounded-lg object-cover">
+                            </td>
+                            <td class="px-6 py-4">
+                                <p class="font-medium text-gray-800"><%= donation.itemName %></p>
+                                <p class="text-xs text-gray-500"><%= donation.size %> | <%= t('donations.' + donation.condition) %></p>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
+                                    <%= t('donations.' + donation.category) %>
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-600"><%= donation.city %></td>
+                            <td class="px-6 py-4">
+                                <select 
+                                    onchange="updateStatus('<%= donation._id %>', this.value)"
+                                    class="text-xs font-medium rounded-lg px-3 py-1.5 border outline-none cursor-pointer transition
+                                    <%= donation.status === 'available' ? 'bg-green-100 text-green-800 border-green-200' : '' %>
+                                    <%= donation.status === 'reserved' ? 'bg-orange-100 text-orange-800 border-orange-200' : '' %>
+                                    <%= donation.status === 'donated' ? 'bg-gray-100 text-gray-800 border-gray-200' : '' %>"
+                                >
+                                    <option value="available" <%= donation.status === 'available' ? 'selected' : '' %>><%= t('donationDetails.available') %></option>
+                                    <option value="reserved" <%= donation.status === 'reserved' ? 'selected' : '' %>><%= t('donationDetails.reserved') %></option>
+                                    <option value="donated" <%= donation.status === 'donated' ? 'selected' : '' %>><%= t('donationDetails.donated') %></option>
+                                </select>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500">
+                                <%= donation.formattedDate %>
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <div class="flex items-center justify-center gap-2">
+                                    <a 
+                                        href="/donations/<%= donation._id %>" 
+                                        target="_blank"
+                                        class="text-blue-500 hover:text-blue-600 p-2 rounded-lg hover:bg-blue-50 transition"
+                                        title="View"
+                                    >
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <button 
+                                        onclick="deleteDonation('<%= donation._id %>')"
+                                        class="text-red-500 hover:text-red-600 p-2 rounded-lg hover:bg-red-50 transition"
+                                        title="Delete"
+                                    >
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="7" class="px-6 py-12 text-center text-gray-500">
+                            <i class="fas fa-inbox text-4xl mb-3 text-gray-300"></i>
+                            <p><%= t('admin.noDonations') %></p>
+                        </td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <% if (pagination.totalPages > 1) { %>
+        <div class="px-6 py-4 border-t border-gray-200 flex justify-between items-center">
+            <p class="text-sm text-gray-500">
+                Page <%= pagination.page %> of <%= pagination.totalPages %>
+            </p>
+            <div class="flex gap-2">
+                <% if (pagination.hasPrev) { %>
+                    <a href="?page=<%= pagination.page - 1 %>" class="px-4 py-2 border border-gray-300 rounded-lg text-sm hover:bg-gray-50 transition">
+                        <i class="fas fa-chevron-<%= isRTL ? 'right' : 'left' %>"></i>
+                    </a>
+                <% } %>
+                <% if (pagination.hasNext) { %>
+                    <a href="?page=<%= pagination.page + 1 %>" class="px-4 py-2 border border-gray-300 rounded-lg text-sm hover:bg-gray-50 transition">
+                        <i class="fas fa-chevron-<%= isRTL ? 'left' : 'right' %>"></i>
+                    </a>
+                <% } %>
+            </div>
+        </div>
+    <% } %>
+</div>
+
+<script>
+    // Update Status
+    async function updateStatus(id, status) {
+        try {
+            const response = await fetch(`/admin/donations/${id}/status`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ status })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Show success notification
+                showNotification('<%= t("success.statusUpdated") %>', 'success');
+
+                // Update select styling
+                const select = document.querySelector(`#row-${id} select`);
+                select.className = `text-xs font-medium rounded-lg px-3 py-1.5 border outline-none cursor-pointer transition
+                    ${status === 'available' ? 'bg-green-100 text-green-800 border-green-200' : ''}
+                    ${status === 'reserved' ? 'bg-orange-100 text-orange-800 border-orange-200' : ''}
+                    ${status === 'donated' ? 'bg-gray-100 text-gray-800 border-gray-200' : ''}`;
+            } else {
+                showNotification(data.message || 'Failed to update status', 'error');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showNotification('<%= t("errors.serverError") %>', 'error');
+        }
+    }
+
+    // Delete Donation
+    async function deleteDonation(id) {
+        if (!confirm('<%= t("admin.confirmDelete") %>')) return;
+
+        try {
+            const response = await fetch(`/admin/donations/${id}`, {
+                method: 'DELETE'
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Remove row from table
+                const row = document.getElementById(`row-${id}`);
+                row.style.transition = 'all 0.3s ease';
+                row.style.opacity = '0';
+                row.style.transform = 'translateX(20px)';
+
+                setTimeout(() => {
+                    row.remove();
+                }, 300);
+
+                showNotification('<%= t("success.donationDeleted") %>', 'success');
+            } else {
+                showNotification(data.message || 'Failed to delete', 'error');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showNotification('<%= t("errors.serverError") %>', 'error');
+        }
+    }
+
+    // Notification Helper
+    function showNotification(message, type) {
+        const div = document.createElement('div');
+        div.className = `fixed top-4 ${document.dir === 'rtl' ? 'left-4' : 'right-4'} z-50 px-6 py-3 rounded-lg shadow-lg text-white font-medium animate-fade-in
+            ${type === 'success' ? 'bg-green-500' : 'bg-red-500'}`;
+        div.innerHTML = `<i class="fas fa-${type === 'success' ? 'check' : 'exclamation'}-circle mr-2"></i>${message}`;
+
+        document.body.appendChild(div);
+
+        setTimeout(() => {
+            div.style.opacity = '0';
+            div.style.transform = 'translateY(-20px)';
+            setTimeout(() => div.remove(), 300);
+        }, 3000);
+    }
+</script>

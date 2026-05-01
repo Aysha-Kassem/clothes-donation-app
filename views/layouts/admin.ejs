@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="<%= lang %>" dir="<%= isRTL ? 'rtl' : 'ltr' %>">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> | Admin</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans Arabic', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: { 500: '#22c55e', 600: '#16a34a', 700: '#15803d' },
+                        secondary: { 500: '#f97316', 600: '#ea580c' }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        [dir="rtl"] .rtl-flip { transform: scaleX(-1); }
+        html { scroll-behavior: smooth; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #22c55e; border-radius: 3px; }
+    </style>
+</head>
+<body class="font-sans bg-gray-100 text-gray-800 min-h-screen">
+
+    <!-- Admin Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-4">
+                    <a href="/admin/dashboard" class="text-xl font-bold text-primary-600">
+                        <i class="fas fa-cog mr-2 rtl:ml-2 rtl:mr-0"></i>
+                        <%= t('admin.dashboard') %>
+                    </a>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a href="/" class="text-gray-600 hover:text-primary-600 transition">
+                        <i class="fas fa-home mr-1 rtl:ml-1 rtl:mr-0"></i>
+                        <%= t('nav.home') %>
+                    </a>
+                    <a href="/admin/logout" class="text-red-600 hover:text-red-700 transition">
+                        <i class="fas fa-sign-out-alt mr-1 rtl:ml-1 rtl:mr-0"></i>
+                        <%= t('admin.logout') %>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Flash Messages -->
+    <% if (success_msg && success_msg.length > 0) { %>
+        <div class="bg-green-50 border-l-4 border-green-500 p-4 mx-4 mt-4 rounded">
+            <p class="text-sm text-green-700"><%= success_msg %></p>
+        </div>
+    <% } %>
+    <% if (error_msg && error_msg.length > 0) { %>
+        <div class="bg-red-50 border-l-4 border-red-500 p-4 mx-4 mt-4 rounded">
+            <p class="text-sm text-red-700"><%= error_msg %></p>
+        </div>
+    <% } %>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <%- body %>
+    </main>
+
+    <script src="/js/main.js"></script>
+    <%- script %>
+</body>
+</html>

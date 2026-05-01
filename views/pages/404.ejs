@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="<%= lang %>" dir="<%= isRTL ? 'rtl' : 'ltr' %>">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans Arabic', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: { 500: '#22c55e', 600: '#16a34a' }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans bg-gray-50 min-h-screen flex items-center justify-center">
+
+    <div class="text-center px-4">
+        <div class="mb-8">
+            <img 
+                src="https://images.unsplash.com/photo-1517842645767-c639042777db?w=400&h=300&fit=crop&q=80" 
+                alt="Lost" 
+                class="w-64 h-48 object-cover rounded-2xl mx-auto shadow-lg mb-6"
+            >
+        </div>
+
+        <h1 class="text-6xl font-bold text-primary-500 mb-4">404</h1>
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">
+            <%= lang === 'ar' ? 'الصفحة غير موجودة' : 'Page Not Found' %>
+        </h2>
+        <p class="text-gray-500 mb-8 max-w-md mx-auto">
+            <%= lang === 'ar' 
+                ? 'عذراً، الصفحة التي تبحث عنها غير موجودة أو تم نقلها.' 
+                : 'Sorry, the page you are looking for does not exist or has been moved.' %>
+        </p>
+
+        <a href="/" class="inline-flex items-center bg-primary-500 hover:bg-primary-600 text-white font-bold px-8 py-3 rounded-full transition shadow-lg hover:shadow-xl">
+            <i class="fas fa-home mr-2 rtl:ml-2 rtl:mr-0"></i>
+            <%= lang === 'ar' ? 'العودة للرئيسية' : 'Back to Home' %>
+        </a>
+    </div>
+
+</body>
+</html>

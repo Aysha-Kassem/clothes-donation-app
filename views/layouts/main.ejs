@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="<%= lang %>" dir="<%= isRTL ? 'rtl' : 'ltr' %>">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="<%= t('app.description') %>">
+    <title><%= title %> | <%= t('app.name') %></title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans Arabic', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        secondary: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            200: '#fed7aa',
+                            300: '#fdba74',
+                            400: '#fb923c',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            800: '#9a3412',
+                            900: '#7c2d12',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* RTL Support */
+        [dir="rtl"] .rtl-flip {
+            transform: scaleX(-1);
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #22c55e;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #16a34a;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+
+        /* Card hover effect */
+        .donation-card {
+            transition: all 0.3s ease;
+        }
+        .donation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Image hover zoom */
+        .image-zoom {
+            overflow: hidden;
+        }
+        .image-zoom img {
+            transition: transform 0.5s ease;
+        }
+        .image-zoom:hover img {
+            transform: scale(1.05);
+        }
+
+        /* WhatsApp button pulse */
+        @keyframes pulse-green {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+        }
+        .whatsapp-pulse {
+            animation: pulse-green 2s infinite;
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50 text-gray-800 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <%- include('../partials/navbar') %>
+
+    <!-- Flash Messages -->
+    <% if (success_msg && success_msg.length > 0) { %>
+        <div class="bg-green-50 border-l-4 border-green-500 p-4 mx-4 mt-4 rounded animate-fade-in">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-check-circle text-green-500"></i>
+                </div>
+                <div class="ml-3 rtl:mr-3 rtl:ml-0">
+                    <p class="text-sm text-green-700"><%= success_msg %></p>
+                </div>
+            </div>
+        </div>
+    <% } %>
+
+    <% if (error_msg && error_msg.length > 0) { %>
+        <div class="bg-red-50 border-l-4 border-red-500 p-4 mx-4 mt-4 rounded animate-fade-in">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-exclamation-circle text-red-500"></i>
+                </div>
+                <div class="ml-3 rtl:mr-3 rtl:ml-0">
+                    <p class="text-sm text-red-700"><%= error_msg %></p>
+                </div>
+            </div>
+        </div>
+    <% } %>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+        <%- body %>
+    </main>
+
+    <!-- Footer -->
+    <%- include('../partials/footer') %>
+
+    <!-- Scripts -->
+    <script src="/js/main.js"></script>
+    <%- script %>
+</body>
+</html>

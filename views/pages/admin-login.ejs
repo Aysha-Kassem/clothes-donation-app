@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="<%= lang %>" dir="<%= isRTL ? 'rtl' : 'ltr' %>">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= t('admin.login') %></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans Arabic', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: { 500: '#22c55e', 600: '#16a34a' }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans bg-gray-100 min-h-screen flex items-center justify-center">
+
+    <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md mx-4">
+        <div class="text-center mb-8">
+            <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-lock text-primary-600 text-2xl"></i>
+            </div>
+            <h1 class="text-2xl font-bold text-gray-800"><%= t('admin.login') %></h1>
+            <p class="text-gray-500 text-sm mt-1">Clothes Donation App</p>
+        </div>
+
+        <% if (error_msg && error_msg.length > 0) { %>
+            <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded">
+                <p class="text-sm text-red-700"><%= error_msg %></p>
+            </div>
+        <% } %>
+
+        <form action="/admin/login" method="POST" class="space-y-5">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2"><%= t('admin.username') %></label>
+                <div class="relative">
+                    <i class="fas fa-user absolute <%= isRTL ? 'right-3' : 'left-3' %> top-1/2 -translate-y-1/2 text-gray-400"></i>
+                    <input 
+                        type="text" 
+                        name="username" 
+                        required
+                        class="w-full border border-gray-300 rounded-xl px-4 py-3 <%= isRTL ? 'pr-10' : 'pl-10' %> focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition"
+                        placeholder="admin"
+                    >
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2"><%= t('admin.password') %></label>
+                <div class="relative">
+                    <i class="fas fa-lock absolute <%= isRTL ? 'right-3' : 'left-3' %> top-1/2 -translate-y-1/2 text-gray-400"></i>
+                    <input 
+                        type="password" 
+                        name="password" 
+                        required
+                        class="w-full border border-gray-300 rounded-xl px-4 py-3 <%= isRTL ? 'pr-10' : 'pl-10' %> focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition"
+                        placeholder="••••••"
+                    >
+                </div>
+            </div>
+
+            <button 
+                type="submit" 
+                class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl transition shadow-lg hover:shadow-xl"
+            >
+                <%= t('admin.loginBtn') %>
+            </button>
+        </form>
+
+        <div class="mt-6 text-center">
+            <a href="/" class="text-gray-500 hover:text-primary-600 text-sm transition">
+                <i class="fas fa-arrow-<%= isRTL ? 'right' : 'left' %> mr-1 rtl:ml-1 rtl:mr-0"></i>
+                <%= t('nav.home') %>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

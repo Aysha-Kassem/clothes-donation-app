@@ -1,0 +1,275 @@
+/**
+ * Custom Styles for Clothes Donation App
+ * أنماط مخصصة لتطبيق التبرع بالملابس
+ */
+
+/* RTL Support Utilities */
+[dir="rtl"] .rtl-space-x-reverse > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-x-reverse: 1;
+}
+
+[dir="rtl"] .rtl-text-right {
+    text-align: right;
+}
+
+[dir="rtl"] .rtl-ml-auto {
+    margin-left: auto;
+}
+
+[dir="rtl"] .rtl-mr-auto {
+    margin-right: auto;
+}
+
+/* Loading Spinner */
+.spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #22c55e;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Skeleton Loading */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+    border-radius: 8px;
+}
+
+@keyframes skeleton-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Toast Notifications */
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+[dir="rtl"] .toast-container {
+    right: auto;
+    left: 20px;
+}
+
+.toast {
+    padding: 12px 20px;
+    border-radius: 12px;
+    color: white;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s;
+    max-width: 350px;
+}
+
+.toast.success { background: #22c55e; }
+.toast.error { background: #ef4444; }
+.toast.warning { background: #f97316; }
+.toast.info { background: #3b82f6; }
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* Image Upload Zone */
+.upload-zone {
+    border: 2px dashed #d1d5db;
+    border-radius: 16px;
+    padding: 40px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.upload-zone:hover {
+    border-color: #22c55e;
+    background-color: #f0fdf4;
+}
+
+.upload-zone.dragover {
+    border-color: #22c55e;
+    background-color: #f0fdf4;
+    transform: scale(1.02);
+}
+
+/* Card Hover Effects */
+.card-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-badge.available {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.status-badge.reserved {
+    background-color: #ffedd5;
+    color: #9a3412;
+}
+
+.status-badge.donated {
+    background-color: #f3f4f6;
+    color: #374151;
+}
+
+/* WhatsApp Button Animation */
+.whatsapp-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.whatsapp-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+}
+
+.whatsapp-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Form Focus States */
+input:focus, select:focus, textarea:focus {
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+}
+
+/* Custom Checkbox */
+.custom-checkbox {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #d1d5db;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.custom-checkbox:checked {
+    background-color: #22c55e;
+    border-color: #22c55e;
+}
+
+.custom-checkbox:checked::after {
+    content: '\2714';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 12px;
+}
+
+/* Responsive Table */
+@media (max-width: 768px) {
+    .responsive-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .responsive-table thead {
+        display: none;
+    }
+
+    .responsive-table tbody tr {
+        display: block;
+        margin-bottom: 16px;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 16px;
+    }
+
+    .responsive-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0;
+        border: none;
+    }
+
+    .responsive-table td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #6b7280;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+
+    body {
+        background: white;
+    }
+
+    .donation-card {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #e5e7eb;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus Visible for Keyboard Navigation */
+:focus-visible {
+    outline: 3px solid #22c55e;
+    outline-offset: 2px;
+}
+
+/* Selection Color */
+::selection {
+    background-color: #22c55e;
+    color: white;
+}

@@ -1,0 +1,204 @@
+<!-- Page Header -->
+<section class="bg-gradient-to-r from-primary-600 to-primary-700 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="text-3xl md:text-4xl font-bold mb-2"><%= t('donations.title') %></h1>
+        <p class="text-white/80"><%= t('app.description') %></p>
+    </div>
+</section>
+
+<!-- Filters Section -->
+<section class="bg-white shadow-md sticky top-16 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <form action="/donations" method="GET" class="flex flex-wrap gap-3 items-end">
+
+            <!-- Category Filter -->
+            <div class="flex-1 min-w-[140px]">
+                <label class="block text-xs font-medium text-gray-600 mb-1"><%= t('donations.category') %></label>
+                <select name="category" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none text-sm">
+                    <option value=""><%= t('donations.allCategories') %></option>
+                    <option value="men" <%= filters.category === 'men' ? 'selected' : '' %>><%= t('donations.men') %></option>
+                    <option value="women" <%= filters.category === 'women' ? 'selected' : '' %>><%= t('donations.women') %></option>
+                    <option value="kids" <%= filters.category === 'kids' ? 'selected' : '' %>><%= t('donations.kids') %></option>
+                </select>
+            </div>
+
+            <!-- City Filter -->
+            <div class="flex-1 min-w-[140px]">
+                <label class="block text-xs font-medium text-gray-600 mb-1"><%= t('donations.city') %></label>
+                <select name="city" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none text-sm">
+                    <option value=""><%= t('donations.allCities') %></option>
+                    <% cities.forEach(city => { %>
+                        <option value="<%= city %>" <%= filters.city === city ? 'selected' : '' %>><%= city %></option>
+                    <% }) %>
+                </select>
+            </div>
+
+            <!-- Status Filter -->
+            <div class="flex-1 min-w-[140px]">
+                <label class="block text-xs font-medium text-gray-600 mb-1"><%= t('donations.status') %></label>
+                <select name="status" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none text-sm">
+                    <option value="available" <%= filters.status === 'available' ? 'selected' : '' %>><%= t('donationDetails.available') %></option>
+                    <option value="reserved" <%= filters.status === 'reserved' ? 'selected' : '' %>><%= t('donationDetails.reserved') %></option>
+                    <option value="donated" <%= filters.status === 'donated' ? 'selected' : '' %>><%= t('donationDetails.donated') %></option>
+                </select>
+            </div>
+
+            <!-- Search -->
+            <div class="flex-[2] min-w-[200px]">
+                <label class="block text-xs font-medium text-gray-600 mb-1"><%= t('donations.search') %></label>
+                <div class="relative">
+                    <input 
+                        type="text" 
+                        name="search" 
+                        value="<%= filters.search || '' %>"
+                        placeholder="<%= t('donations.search') %>"
+                        class="w-full border border-gray-300 rounded-lg pl-10 pr-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none text-sm"
+                    >
+                    <i class="fas fa-search absolute <%= isRTL ? 'right-3' : 'left-3' %> top-1/2 -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="bg-primary-500 hover:bg-primary-600 text-white font-medium px-6 py-2 rounded-lg transition flex items-center gap-2">
+                <i class="fas fa-filter"></i>
+                <%= t('donations.searchBtn') %>
+            </button>
+
+            <!-- Reset -->
+            <a href="/donations" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium px-4 py-2 rounded-lg transition">
+                <i class="fas fa-undo"></i>
+            </a>
+        </form>
+    </div>
+</section>
+
+<!-- Stats Bar -->
+<div class="bg-primary-50 border-b border-primary-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+        <div class="flex flex-wrap gap-6 text-sm">
+            <span class="text-primary-700">
+                <i class="fas fa-gift mr-1 rtl:ml-1 rtl:mr-0"></i>
+                <%= t('home.totalDonations') %>: <strong><%= stats.total %></strong>
+            </span>
+            <span class="text-green-700">
+                <i class="fas fa-check-circle mr-1 rtl:ml-1 rtl:mr-0"></i>
+                <%= t('donationDetails.available') %>: <strong><%= stats.available %></strong>
+            </span>
+            <span class="text-orange-700">
+                <i class="fas fa-clock mr-1 rtl:ml-1 rtl:mr-0"></i>
+                <%= t('donationDetails.reserved') %>: <strong><%= stats.reserved %></strong>
+            </span>
+            <span class="text-blue-700">
+                <i class="fas fa-heart mr-1 rtl:ml-1 rtl:mr-0"></i>
+                <%= t('donationDetails.donated') %>: <strong><%= stats.donated %></strong>
+            </span>
+        </div>
+    </div>
+</div>
+
+<!-- Donations Grid -->
+<section class="py-8 bg-gray-50 min-h-[500px]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <% if (donations && donations.length > 0) { %>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <% donations.forEach((donation, index) => { %>
+                    <div class="donation-card bg-white rounded-2xl overflow-hidden shadow-md animate-fade-in" style="animation-delay: <%= index * 0.05 %>s">
+                        <!-- Image -->
+                        <div class="image-zoom relative h-52">
+                            <img src="<%= donation.imageUrl %>" alt="<%= donation.itemName %>" class="w-full h-full object-cover">
+
+                            <!-- Category Badge -->
+                            <div class="absolute top-3 <%= isRTL ? 'right-3' : 'left-3' %>">
+                                <span class="bg-white/90 backdrop-blur-sm text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wide shadow-sm">
+                                    <%= t('donations.' + donation.category) %>
+                                </span>
+                            </div>
+
+                            <!-- Size Badge -->
+                            <div class="absolute bottom-3 <%= isRTL ? 'left-3' : 'right-3' %>">
+                                <span class="bg-primary-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-sm">
+                                    <%= donation.size %>
+                                </span>
+                            </div>
+
+                            <!-- Status Badge -->
+                            <div class="absolute top-3 <%= isRTL ? 'left-3' : 'right-3' %>">
+                                <% if (donation.status === 'available') { %>
+                                    <span class="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                                        <%= t('donationDetails.available') %>
+                                    </span>
+                                <% } else if (donation.status === 'reserved') { %>
+                                    <span class="bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                                        <%= t('donationDetails.reserved') %>
+                                    </span>
+                                <% } else { %>
+                                    <span class="bg-gray-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                                        <%= t('donationDetails.donated') %>
+                                    </span>
+                                <% } %>
+                            </div>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="p-5">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2 truncate"><%= donation.itemName %></h3>
+
+                            <div class="space-y-2 mb-4">
+                                <div class="flex items-center gap-2 text-sm text-gray-600">
+                                    <i class="fas fa-map-marker-alt text-primary-500 w-4"></i>
+                                    <span><%= donation.city %></span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm text-gray-600">
+                                    <i class="fas fa-tag text-secondary-500 w-4"></i>
+                                    <span><%= t('donations.' + donation.condition) %></span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm text-gray-500">
+                                    <i class="fas fa-eye text-gray-400 w-4"></i>
+                                    <span><%= donation.views %> <%= t('donations.views') %></span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                                <span class="text-xs text-gray-400">
+                                    <%= donation.formattedDate %>
+                                </span>
+                                <div class="flex gap-2">
+                                    <a href="/donations/<%= donation._id %>" class="text-primary-600 hover:text-primary-700 font-medium text-sm transition">
+                                        <%= t('donations.detailsBtn') %>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- WhatsApp Button -->
+                            <% if (donation.status === 'available') { %>
+                                <a 
+                                    href="<%= donation.getWhatsAppLink() %>" 
+                                    target="_blank"
+                                    class="mt-3 w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2.5 rounded-xl transition flex items-center justify-center gap-2 whatsapp-pulse"
+                                >
+                                    <i class="fab fa-whatsapp text-lg"></i>
+                                    <%= t('donations.contactBtn') %>
+                                </a>
+                            <% } %>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <div class="text-center py-20">
+                <div class="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-search text-gray-400 text-4xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-700 mb-2"><%= t('donations.noResults') %></h3>
+                <p class="text-gray-500 mb-6">
+                    <%= isRTL ? 'جرب تغيير معايير البحث أو تصفح جميع التبرعات.' : 'Try changing your search criteria or browse all donations.' %>
+                </p>
+                <a href="/donations" class="inline-flex items-center bg-primary-500 hover:bg-primary-600 text-white font-medium px-6 py-3 rounded-full transition">
+                    <i class="fas fa-undo mr-2 rtl:ml-2 rtl:mr-0"></i>
+                    <%= isRTL ? 'عرض الكل' : 'Show All' %>
+                </a>
+            </div>
+        <% } %>
+    </div>
+</section>

@@ -1,0 +1,252 @@
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-br from-primary-600 via-primary-500 to-secondary-500 text-white overflow-hidden">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-0 left-0 w-72 h-72 bg-white rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full translate-x-1/3 translate-y-1/3"></div>
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <!-- Text Content -->
+            <div class="animate-fade-in">
+                <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-4 py-1.5 mb-6">
+                    <i class="fas fa-heart text-secondary-300 text-sm"></i>
+                    <span class="text-sm font-medium"><%= t('app.tagline') %></span>
+                </div>
+
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+                    <%= t('home.heroTitle') %>
+                </h1>
+
+                <p class="text-lg md:text-xl text-white/90 mb-8 leading-relaxed">
+                    <%= t('home.heroSubtitle') %>
+                </p>
+
+                <div class="flex flex-wrap gap-4">
+                    <a href="/donations" class="bg-white text-primary-600 font-bold px-8 py-3.5 rounded-full hover:bg-gray-100 transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                        <i class="fas fa-search mr-2 rtl:ml-2 rtl:mr-0"></i>
+                        <%= t('home.browseBtn') %>
+                    </a>
+                    <a href="/donations/add" class="bg-secondary-500 text-white font-bold px-8 py-3.5 rounded-full hover:bg-secondary-600 transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                        <i class="fas fa-hand-holding-heart mr-2 rtl:ml-2 rtl:mr-0"></i>
+                        <%= t('home.donateBtn') %>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Hero Image -->
+            <div class="hidden md:block animate-fade-in delay-200">
+                <div class="relative">
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary-600/50 to-transparent rounded-3xl z-10"></div>
+                    <img 
+                        src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600&h=500&fit=crop&q=80" 
+                        alt="Clothes Donation" 
+                        class="rounded-3xl shadow-2xl w-full h-[400px] object-cover"
+                    >
+                    <!-- Floating Card -->
+                    <div class="absolute -bottom-6 <%= isRTL ? '-left-6' : '-right-6' %> bg-white rounded-2xl p-4 shadow-xl z-20 animate-fade-in delay-300">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-check text-green-600 text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-gray-800">500+</p>
+                                <p class="text-sm text-gray-500">Items Donated</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wave Divider -->
+    <div class="absolute bottom-0 left-0 right-0">
+        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="#f9fafb"/>
+        </svg>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="bg-gray-50 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4"><%= t('home.statsTitle') %></h2>
+            <div class="w-20 h-1 bg-primary-500 mx-auto rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="bg-white rounded-2xl p-6 text-center shadow-md hover:shadow-lg transition">
+                <div class="w-14 h-14 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-gift text-primary-600 text-xl"></i>
+                </div>
+                <p class="text-3xl font-bold text-gray-800">1000+</p>
+                <p class="text-gray-500 mt-1"><%= t('home.totalDonations') %></p>
+            </div>
+
+            <div class="bg-white rounded-2xl p-6 text-center shadow-md hover:shadow-lg transition">
+                <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                </div>
+                <p class="text-3xl font-bold text-gray-800">800+</p>
+                <p class="text-gray-500 mt-1"><%= t('home.available') %></p>
+            </div>
+
+            <div class="bg-white rounded-2xl p-6 text-center shadow-md hover:shadow-lg transition">
+                <div class="w-14 h-14 bg-secondary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-heart text-secondary-600 text-xl"></i>
+                </div>
+                <p class="text-3xl font-bold text-gray-800">500+</p>
+                <p class="text-gray-500 mt-1"><%= t('home.donated') %></p>
+            </div>
+
+            <div class="bg-white rounded-2xl p-6 text-center shadow-md hover:shadow-lg transition">
+                <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-map-marker-alt text-blue-600 text-xl"></i>
+                </div>
+                <p class="text-3xl font-bold text-gray-800">25+</p>
+                <p class="text-gray-500 mt-1"><%= t('home.cities') %></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4"><%= t('nav.howItWorks') %></h2>
+            <div class="w-20 h-1 bg-primary-500 mx-auto rounded-full"></div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="text-center group">
+                <div class="w-20 h-20 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-primary-500 transition duration-300">
+                    <i class="fas fa-camera text-primary-600 text-2xl group-hover:text-white transition"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">
+                    <%= isRTL ? 'صور القطعة' : 'Snap a Photo' %>
+                </h3>
+                <p class="text-gray-500 leading-relaxed">
+                    <%= isRTL ? 'التقط صورة واضحة للقطعة التي تريد التبرع بها وأضف وصفاً بسيطاً.' : 'Take a clear photo of the item you want to donate and add a brief description.' %>
+                </p>
+            </div>
+
+            <div class="text-center group">
+                <div class="w-20 h-20 bg-secondary-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-secondary-500 transition duration-300">
+                    <i class="fas fa-upload text-secondary-600 text-2xl group-hover:text-white transition"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">
+                    <%= isRTL ? 'أضف التفاصيل' : 'Add Details' %>
+                </h3>
+                <p class="text-gray-500 leading-relaxed">
+                    <%= isRTL ? 'املأ النموذج بمعلومات القطعة: الفئة، المقاس، الحالة، والمدينة.' : 'Fill in the form with item details: category, size, condition, and city.' %>
+                </p>
+            </div>
+
+            <div class="text-center group">
+                <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-green-500 transition duration-300">
+                    <i class="fas fa-hands-helping text-green-600 text-2xl group-hover:text-white transition"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">
+                    <%= isRTL ? 'ساعد شخصاً' : 'Help Someone' %>
+                </h3>
+                <p class="text-gray-500 leading-relaxed">
+                    <%= isRTL ? 'سيتواصل معك شخص يحتاج القطعة عبر واتساب لترتيب الاستلام.' : 'Someone in need will contact you via WhatsApp to arrange pickup.' %>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Latest Donations -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-end mb-12">
+            <div>
+                <h2 class="text-3xl font-bold text-gray-800 mb-2"><%= t('home.latestTitle') %></h2>
+                <div class="w-20 h-1 bg-primary-500 rounded-full"></div>
+            </div>
+            <a href="/donations" class="hidden md:inline-flex items-center text-primary-600 font-semibold hover:text-primary-700 transition">
+                <%= t('home.viewAll') %>
+                <i class="fas fa-arrow-<%= isRTL ? 'left' : 'right' %> ml-2 rtl:mr-2 rtl:ml-0"></i>
+            </a>
+        </div>
+
+        <% if (donations && donations.length > 0) { %>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <% donations.forEach((donation, index) => { %>
+                    <div class="donation-card bg-white rounded-2xl overflow-hidden shadow-md animate-fade-in" style="animation-delay: <%= index * 0.1 %>s">
+                        <div class="image-zoom relative h-48">
+                            <img src="<%= donation.imageUrl %>" alt="<%= donation.itemName %>" class="w-full h-full object-cover">
+                            <div class="absolute top-3 <%= isRTL ? 'right-3' : 'left-3' %>">
+                                <span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-3 py-1 rounded-full uppercase">
+                                    <%= t('donations.' + donation.category) %>
+                                </span>
+                            </div>
+                            <div class="absolute bottom-3 <%= isRTL ? 'left-3' : 'right-3' %>">
+                                <span class="bg-primary-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                                    <%= donation.size %>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="p-5">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2 truncate"><%= donation.itemName %></h3>
+
+                            <div class="flex items-center gap-2 text-sm text-gray-500 mb-3">
+                                <i class="fas fa-map-marker-alt text-primary-500"></i>
+                                <span><%= donation.city %></span>
+                            </div>
+
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-gray-400">
+                                    <%= donation.formattedDate %>
+                                </span>
+                                <a href="/donations/<%= donation._id %>" class="text-primary-600 hover:text-primary-700 font-medium text-sm transition">
+                                    <%= t('donations.detailsBtn') %>
+                                    <i class="fas fa-arrow-<%= isRTL ? 'left' : 'right' %> text-xs <%= isRTL ? 'mr-1' : 'ml-1' %>"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+
+            <div class="text-center mt-8 md:hidden">
+                <a href="/donations" class="inline-flex items-center text-primary-600 font-semibold hover:text-primary-700 transition">
+                    <%= t('home.viewAll') %>
+                    <i class="fas fa-arrow-<%= isRTL ? 'left' : 'right' %> ml-2 rtl:mr-2 rtl:ml-0"></i>
+                </a>
+            </div>
+        <% } else { %>
+            <div class="text-center py-12 bg-white rounded-2xl">
+                <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-inbox text-gray-400 text-3xl"></i>
+                </div>
+                <p class="text-gray-500 text-lg"><%= t('donations.noResults') %></p>
+                <a href="/donations/add" class="inline-block mt-4 text-primary-600 font-semibold hover:text-primary-700">
+                    <%= t('home.donateBtn') %>
+                </a>
+            </div>
+        <% } %>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-16 bg-gradient-to-r from-primary-600 to-secondary-500 text-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">
+            <%= isRTL ? 'هل لديك ملابس لا تحتاجها؟' : 'Have clothes you no longer need?' %>
+        </h2>
+        <p class="text-lg text-white/90 mb-8">
+            <%= isRTL ? 'ساهم في مساعدة الآخرين وامنح ملابسك حياةً جديدة.' : 'Help others and give your clothes a new life.' %>
+        </p>
+        <a href="/donations/add" class="inline-flex items-center bg-white text-primary-600 font-bold px-8 py-4 rounded-full hover:bg-gray-100 transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-lg">
+            <i class="fas fa-plus mr-2 rtl:ml-2 rtl:mr-0"></i>
+            <%= t('home.donateBtn') %>
+        </a>
+    </div>
+</section>

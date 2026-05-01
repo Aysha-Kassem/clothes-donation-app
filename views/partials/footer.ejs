@@ -1,0 +1,63 @@
+<footer class="bg-gray-800 text-white mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+            <!-- Brand -->
+            <div class="space-y-4">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center">
+                        <i class="fas fa-hand-holding-heart text-white text-sm"></i>
+                    </div>
+                    <span class="font-bold text-lg"><%= t('app.name') %></span>
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    <%= t('app.description') %>
+                </p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="space-y-4">
+                <h3 class="font-semibold text-lg"><%= t('nav.home') %></h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li>
+                        <a href="/donations" class="hover:text-primary-400 transition"><%= t('nav.donations') %></a>
+                    </li>
+                    <li>
+                        <a href="/donations/add" class="hover:text-primary-400 transition"><%= t('nav.addDonation') %></a>
+                    </li>
+                    <li>
+                        <a href="/about" class="hover:text-primary-400 transition"><%= t('nav.about') %></a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div class="space-y-4">
+                <h3 class="font-semibold text-lg"><%= t('donationDetails.contactTitle') %></h3>
+                <p class="text-gray-400 text-sm">
+                    <%= t('app.tagline') %>
+                </p>
+                <div class="flex gap-3">
+                    <a href="#" class="w-9 h-9 bg-gray-700 hover:bg-primary-500 rounded-full flex items-center justify-center transition">
+                        <i class="fab fa-facebook-f text-sm"></i>
+                    </a>
+                    <a href="#" class="w-9 h-9 bg-gray-700 hover:bg-primary-500 rounded-full flex items-center justify-center transition">
+                        <i class="fab fa-twitter text-sm"></i>
+                    </a>
+                    <a href="#" class="w-9 h-9 bg-gray-700 hover:bg-primary-500 rounded-full flex items-center justify-center transition">
+                        <i class="fab fa-instagram text-sm"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400 text-sm">
+            <p>
+                © <%= new Date().getFullYear() %> <%= t('app.name') %>. <%= t('footer.rights') %>
+            </p>
+            <p class="mt-1">
+                <%= t('footer.madeWith') %>
+            </p>
+        </div>
+    </div>
+</footer>
