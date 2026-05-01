@@ -108,6 +108,7 @@ if (!fs.existsSync(layoutsDir)) {
 const mainRoutes = require('./routes/mainRoutes');
 const donationRoutes = require('./routes/donationRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const donationController = require('./controllers/donationController');
 
 app.get('/health', (req, res) => {
   res.status(200).json({
@@ -115,6 +116,10 @@ app.get('/health', (req, res) => {
     service: 'clothes-donation-app'
   });
 });
+
+// Explicit production-safe route fallback. Railway should hit this route even
+// if mounted routers behave differently than expected.
+app.get('/donations', donationController.getAllDonations);
 
 // Fallback homepage for production deployments. If the main router does not
 // match `/` for any platform-specific reason, send visitors to the donations
