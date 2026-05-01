@@ -50,6 +50,22 @@ require('./config/db');
 // ============================================
 // Middleware Setup
 // ============================================
+app.use((req, res, next) => {
+  // Vercel may invoke the Node function under /api/index(.js); normalize it
+  // back to the public path so Express routes match as expected.
+  if (req.url === '/api' || req.url === '/api/' || req.url === '/api/index' || req.url === '/api/index.js') {
+    req.url = '/';
+  } else if (req.url.startsWith('/api/index.js/')) {
+    req.url = req.url.replace('/api/index.js', '');
+  } else if (req.url.startsWith('/api/index/')) {
+    req.url = req.url.replace('/api/index', '');
+  } else if (req.url.startsWith('/api/')) {
+    req.url = req.url.replace('/api', '');
+  }
+
+  next();
+});
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride('_method'));
