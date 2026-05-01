@@ -167,6 +167,8 @@
 
     <!-- Scripts -->
     <script src="/js/main.js"></script>
-    <%- script %>
+    <% if (typeof script !== 'undefined') { %>
+        <%- script %>
+    <% } %>
 </body>
 </html>
