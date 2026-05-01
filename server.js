@@ -7,8 +7,8 @@
 
 require('dotenv').config();
 const express = require('express');
-const mongoose = require('mongoose');
 const path = require('path');
+const fs = require('fs');
 const expressLayouts = require('express-ejs-layouts');
 const methodOverride = require('method-override');
 const session = require('express-session');
@@ -93,7 +93,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('layout', 'layouts/main');
 
 // Create layouts directory if not exists
-const fs = require('fs');
 const layoutsDir = path.join(__dirname, 'views', 'layouts');
 if (!fs.existsSync(layoutsDir)) {
   fs.mkdirSync(layoutsDir, { recursive: true });
@@ -128,13 +127,15 @@ app.use((err, req, res, next) => {
   });
 });
 
+module.exports = app;
+
 // ============================================
 // Start Server
 // ============================================
-app.listen(PORT, () => {
-  console.log(`\n🚀 Server running on http://localhost:${PORT}`);
-  console.log(`📁 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`🌐 Language Support: Arabic & English\n`);
-});
-
-module.exports = app;
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`\nServer running on http://localhost:${PORT}`);
+    console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log('Language Support: Arabic & English\n');
+  });
+}

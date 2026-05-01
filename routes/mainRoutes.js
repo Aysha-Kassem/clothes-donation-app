@@ -11,11 +11,12 @@ const donationController = require('../controllers/donationController');
 router.get('/', async (req, res) => {
   try {
     const latestDonations = await donationController.getLatestDonations(8);
-    const stats = await donationController.getDonationStats;
+    const stats = await donationController.fetchHomepageStats();
 
     res.render('pages/index', {
       title: req.t('home.title', 'Clothes Donation - Share the Warmth'),
       donations: latestDonations,
+      stats,
       layout: 'layouts/main'
     });
   } catch (error) {
@@ -23,6 +24,13 @@ router.get('/', async (req, res) => {
     res.render('pages/index', {
       title: req.t('home.title', 'Clothes Donation - Share the Warmth'),
       donations: [],
+      stats: {
+        total: 0,
+        available: 0,
+        reserved: 0,
+        donated: 0,
+        cities: 0
+      },
       layout: 'layouts/main'
     });
   }

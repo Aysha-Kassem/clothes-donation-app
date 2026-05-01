@@ -1,0 +1,48 @@
+<section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10">
+            <span class="inline-flex items-center rounded-full bg-primary-50 px-4 py-1.5 text-primary-700 font-semibold mb-4">
+                <i class="fas fa-heart mr-2 rtl:ml-2 rtl:mr-0"></i>
+                <%= isRTL ? 'من نحن' : 'About Us' %>
+            </span>
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">
+                <%= isRTL ? 'نربط بين من يملك الملابس ومن يحتاجها' : 'Connecting clothing donors with people who need them' %>
+            </h1>
+            <p class="text-lg text-gray-600 leading-relaxed">
+                <%= isRTL ? 'هذا المشروع يسهّل التبرع بالملابس المستعملة بطريقة محترمة وسريعة وآمنة داخل المجتمع المحلي.' : 'This project makes donating used clothes simple, respectful, and fast within the local community.' %>
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="rounded-2xl bg-gray-50 p-6 shadow-sm">
+                <div class="w-12 h-12 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center mb-4">
+                    <i class="fas fa-bullseye"></i>
+                </div>
+                <h2 class="text-xl font-bold text-gray-900 mb-2"><%= isRTL ? 'هدفنا' : 'Our Mission' %></h2>
+                <p class="text-gray-600">
+                    <%= isRTL ? 'تقليل الهدر وتحويل الملابس الزائدة إلى فرصة لمساعدة الآخرين.' : 'Reduce waste and turn unused clothes into meaningful help for others.' %>
+                </p>
+            </div>
+
+            <div class="rounded-2xl bg-gray-50 p-6 shadow-sm">
+                <div class="w-12 h-12 rounded-full bg-secondary-100 text-secondary-600 flex items-center justify-center mb-4">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h2 class="text-xl font-bold text-gray-900 mb-2"><%= isRTL ? 'المجتمع' : 'Community' %></h2>
+                <p class="text-gray-600">
+                    <%= isRTL ? 'نبني وسيلة مباشرة بين المتبرع والمستفيد بدون تعقيد غير ضروري.' : 'We create a direct path between donors and recipients without unnecessary friction.' %>
+                </p>
+            </div>
+
+            <div class="rounded-2xl bg-gray-50 p-6 shadow-sm">
+                <div class="w-12 h-12 rounded-full bg-green-100 text-green-600 flex items-center justify-center mb-4">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h2 class="text-xl font-bold text-gray-900 mb-2"><%= isRTL ? 'الوضوح' : 'Transparency' %></h2>
+                <p class="text-gray-600">
+                    <%= isRTL ? 'كل تبرع يحتوي على صورة ووصف وحالة واضحة لتسهيل الاختيار والتواصل.' : 'Each donation includes a photo, description, and status to make browsing and contact easier.' %>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>

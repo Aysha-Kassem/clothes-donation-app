@@ -12,6 +12,9 @@ const { donationValidationRules, handleValidationErrors } = require('../middlewa
 // GET /donations - List all donations with filters
 router.get('/', donationController.getAllDonations);
 
+// GET /donations/api/stats - Get donation statistics (API)
+router.get('/api/stats', donationController.getDonationStats);
+
 // GET /donations/add - Show add donation form
 router.get('/add', donationController.getAddDonationForm);
 
@@ -27,8 +30,5 @@ router.post(
 
 // GET /donations/:id - Show single donation
 router.get('/:id', donationController.getDonationById);
-
-// GET /donations/stats - Get donation statistics (API)
-router.get('/api/stats', donationController.getDonationStats);
 
 module.exports = router;

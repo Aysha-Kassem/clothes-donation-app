@@ -82,7 +82,7 @@
                 <div class="w-14 h-14 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i class="fas fa-gift text-primary-600 text-xl"></i>
                 </div>
-                <p class="text-3xl font-bold text-gray-800">1000+</p>
+                <p class="text-3xl font-bold text-gray-800"><%= stats?.total ?? 0 %></p>
                 <p class="text-gray-500 mt-1"><%= t('home.totalDonations') %></p>
             </div>
 
@@ -90,7 +90,7 @@
                 <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i class="fas fa-check-circle text-green-600 text-xl"></i>
                 </div>
-                <p class="text-3xl font-bold text-gray-800">800+</p>
+                <p class="text-3xl font-bold text-gray-800"><%= stats?.available ?? 0 %></p>
                 <p class="text-gray-500 mt-1"><%= t('home.available') %></p>
             </div>
 
@@ -98,7 +98,7 @@
                 <div class="w-14 h-14 bg-secondary-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i class="fas fa-heart text-secondary-600 text-xl"></i>
                 </div>
-                <p class="text-3xl font-bold text-gray-800">500+</p>
+                <p class="text-3xl font-bold text-gray-800"><%= stats?.donated ?? 0 %></p>
                 <p class="text-gray-500 mt-1"><%= t('home.donated') %></p>
             </div>
 
@@ -106,7 +106,7 @@
                 <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i class="fas fa-map-marker-alt text-blue-600 text-xl"></i>
                 </div>
-                <p class="text-3xl font-bold text-gray-800">25+</p>
+                <p class="text-3xl font-bold text-gray-800"><%= stats?.cities ?? 0 %></p>
                 <p class="text-gray-500 mt-1"><%= t('home.cities') %></p>
             </div>
         </div>

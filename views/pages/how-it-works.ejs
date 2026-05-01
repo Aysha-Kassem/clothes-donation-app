@@ -1,0 +1,42 @@
+<section class="py-16 bg-gray-50">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="inline-flex items-center rounded-full bg-secondary-50 px-4 py-1.5 text-secondary-700 font-semibold mb-4">
+                <i class="fas fa-list-check mr-2 rtl:ml-2 rtl:mr-0"></i>
+                <%= isRTL ? 'كيف يعمل الموقع' : 'How It Works' %>
+            </span>
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">
+                <%= isRTL ? 'ثلاث خطوات بسيطة لإتمام التبرع' : 'Donate in three simple steps' %>
+            </h1>
+            <p class="text-lg text-gray-600">
+                <%= isRTL ? 'أضف القطعة، انتظر التواصل، ثم نسّق التسليم مباشرة.' : 'Add the item, wait for contact, then arrange handoff directly.' %>
+            </p>
+        </div>
+
+        <div class="space-y-6">
+            <div class="bg-white rounded-3xl p-8 shadow-sm flex flex-col md:flex-row md:items-center gap-6">
+                <div class="w-16 h-16 rounded-2xl bg-primary-100 text-primary-600 flex items-center justify-center text-2xl font-bold">1</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2"><%= isRTL ? 'أضف تبرعاً جديداً' : 'Add a donation' %></h2>
+                    <p class="text-gray-600"><%= isRTL ? 'ارفع صورة واضحة وأدخل الفئة والمقاس والحالة والمدينة ورقم واتساب.' : 'Upload a clear photo and enter the category, size, condition, city, and WhatsApp number.' %></p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-3xl p-8 shadow-sm flex flex-col md:flex-row md:items-center gap-6">
+                <div class="w-16 h-16 rounded-2xl bg-secondary-100 text-secondary-600 flex items-center justify-center text-2xl font-bold">2</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2"><%= isRTL ? 'دع الآخرين يجدون القطعة' : 'Let others discover it' %></h2>
+                    <p class="text-gray-600"><%= isRTL ? 'تظهر القطعة في قائمة التبرعات ويمكن للمهتمين تصفحها ومعرفة تفاصيلها.' : 'The item appears in the donations list so interested people can browse and view its details.' %></p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-3xl p-8 shadow-sm flex flex-col md:flex-row md:items-center gap-6">
+                <div class="w-16 h-16 rounded-2xl bg-green-100 text-green-600 flex items-center justify-center text-2xl font-bold">3</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2"><%= isRTL ? 'نسّق التسليم' : 'Arrange handoff' %></h2>
+                    <p class="text-gray-600"><%= isRTL ? 'يتم التواصل عبر واتساب مباشرةً لتنسيق الاستلام أو التسليم بطريقة مناسبة للطرفين.' : 'Contact happens directly through WhatsApp to arrange pickup or handoff in a way that works for both sides.' %></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -6,6 +6,13 @@
 const Donation = require('../models/Donation');
 const cloudinary = require('../config/cloudinary');
 
+const emptyStats = {
+  total: 0,
+  available: 0,
+  reserved: 0,
+  donated: 0
+};
+
 // Get all donations with filtering
 // عرض جميع التبرعات مع الفلترة
 exports.getAllDonations = async (req, res) => {
@@ -165,11 +172,42 @@ exports.getLatestDonations = async (limit = 8) => {
   }
 };
 
+// Fetch donation statistics for server-rendered pages
+exports.fetchDonationStats = async () => {
+  try {
+    return await Donation.getStats();
+  } catch (error) {
+    console.error('Error fetching donation stats:', error);
+    return emptyStats;
+  }
+};
+
+// Fetch homepage stats including unique city count
+exports.fetchHomepageStats = async () => {
+  try {
+    const [stats, cities] = await Promise.all([
+      Donation.getStats(),
+      Donation.distinct('city')
+    ]);
+
+    return {
+      ...stats,
+      cities: cities.length
+    };
+  } catch (error) {
+    console.error('Error fetching homepage stats:', error);
+    return {
+      ...emptyStats,
+      cities: 0
+    };
+  }
+};
+
 // Get donation statistics
 // إحصائيات التبرعات
 exports.getDonationStats = async (req, res) => {
   try {
-    const stats = await Donation.getStats();
+    const stats = await exports.fetchDonationStats();
 
     // Category breakdown
     const categoryStats = await Donation.aggregate([
