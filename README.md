@@ -85,6 +85,42 @@ npm start
 
 The app will be available at: `http://localhost:3000`
 
+## Deployment Recommendation | أفضل طريقة للنشر
+
+For this stack (`Express + EJS + MongoDB + sessions + file uploads`), deploy as a regular Node.js app on Railway or Render.
+
+لهذا المشروع تحديداً، أفضل نشره كتطبيق Node.js عادي على Railway أو Render بدلاً من Vercel.
+
+### Railway
+
+1. Push the repo to GitHub.
+2. Create a new Railway project from the GitHub repository.
+3. Railway will detect the app automatically, or it can use the included `Dockerfile`.
+4. Add these environment variables:
+
+```env
+NODE_ENV=production
+PORT=3000
+MONGODB_URI=your_mongodb_connection_string
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=your_secure_password
+SESSION_SECRET=your_random_secret_key
+```
+
+5. Deploy, then open `/health` to confirm the service is up.
+
+### Render
+
+Use:
+
+- Build Command: `npm install`
+- Start Command: `npm start`
+
+Add the same environment variables listed above.
+
 ---
 
 ## 📁 Project Structure | هيكل المشروع

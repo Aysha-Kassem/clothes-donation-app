@@ -19,6 +19,10 @@ const rateLimit = require('express-rate-limit');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Trust reverse proxies used by platforms like Railway/Render so secure
+// cookies and protocol detection behave correctly in production.
+app.set('trust proxy', 1);
+
 // ============================================
 // Security Middleware
 // ============================================
@@ -50,30 +54,6 @@ require('./config/db');
 // ============================================
 // Middleware Setup
 // ============================================
-app.use((req, res, next) => {
-  // Vercel may invoke the Node function under /api/index(.js); normalize it
-  // back to the public path so Express routes match as expected.
-  if (
-    req.url === '/api' ||
-    req.url === '/api/' ||
-    req.url === '/api/index' ||
-    req.url === '/api/index.js' ||
-    req.url === '/server.js'
-  ) {
-    req.url = '/';
-  } else if (req.url.startsWith('/api/index.js/')) {
-    req.url = req.url.replace('/api/index.js', '');
-  } else if (req.url.startsWith('/api/index/')) {
-    req.url = req.url.replace('/api/index', '');
-  } else if (req.url.startsWith('/api/')) {
-    req.url = req.url.replace('/api', '');
-  } else if (req.url.startsWith('/server.js/')) {
-    req.url = req.url.replace('/server.js', '');
-  }
-
-  next();
-});
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride('_method'));
@@ -128,6 +108,24 @@ if (!fs.existsSync(layoutsDir)) {
 const mainRoutes = require('./routes/mainRoutes');
 const donationRoutes = require('./routes/donationRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    ok: true,
+    service: 'clothes-donation-app'
+  });
+});
+
+// Fallback homepage for production deployments. If the main router does not
+// match `/` for any platform-specific reason, send visitors to the donations
+// listing instead of the generic 404 page.
+app.get('/', (req, res, next) => {
+  if (req.path !== '/') {
+    return next();
+  }
+
+  return res.redirect('/donations');
+});
 
 app.use('/', mainRoutes);
 app.use('/donations', donationRoutes);
