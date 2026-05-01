@@ -133,6 +133,10 @@ app.use('/admin', adminRoutes);
 
 // 404 Handler
 app.use((req, res) => {
+  if (req.originalUrl === '/' || req.path === '/') {
+    return res.redirect('/donations');
+  }
+
   res.status(404).render('pages/404', { 
     title: '404 - Page Not Found',
     layout: false 
