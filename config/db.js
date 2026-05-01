@@ -5,20 +5,44 @@
 
 const mongoose = require('mongoose');
 
+let connectionPromise = null;
+
 const connectDB = async () => {
+  const mongoUri = process.env.MONGODB_URI;
+
+  if (!mongoUri) {
+    console.error('MongoDB connection skipped: MONGODB_URI is not set.');
+    return null;
+  }
+
+  if (mongoose.connection.readyState === 1) {
+    return mongoose.connection;
+  }
+
+  if (connectionPromise) {
+    return connectionPromise;
+  }
+
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/clothes_donation', {
-      // Mongoose 6+ doesn't need these options, but kept for clarity
+    connectionPromise = mongoose.connect(mongoUri, {
+      serverSelectionTimeoutMS: 5000
     });
+
+    const conn = await connectionPromise;
 
     console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
     console.log(`📊 Database: ${conn.connection.name}\n`);
+    return conn.connection;
   } catch (error) {
     console.error('❌ MongoDB Connection Error:', error.message);
-    process.exit(1);
+    connectionPromise = null;
+    return null;
   }
 };
 
 connectDB();
 
-module.exports = mongoose;
+module.exports = {
+  mongoose,
+  connectDB
+};
